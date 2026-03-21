@@ -1,0 +1,233 @@
+
+
+#include "Student1.h"
+
+
+int main() {
+    char *expression1 = "0";
+    printf("Expression1: %s\n\n", expression1);
+
+    char postfix1[STACK_LEN];
+    double val11 = 0.0;
+    double val12 = 0.0;
+    long numOperations11 = 0;
+    long numOperations12 = 0;
+
+
+    puts("Single-stack calculator with "
+                "postfix notation conversion:");
+
+    int opn1 = InfixToPostfix(expression1, postfix1, sizeof(postfix1));
+
+    if (opn1 == 0) {
+        printf("opn: %s\n", postfix1);
+        int res11 = EvaluatePostfix(postfix1, &val11, &numOperations11);
+
+        if (res11 == 0) {
+            printf("Result = %f\n", val11);
+            printf("NumberOperations = %ld\n\n", numOperations11);
+        }
+    }
+
+    puts("Double-stack calculator without explicit"
+                 " conversion to postfix notation:");
+    int res12 = EvaluateInfix(expression1, &val12, &numOperations12);
+
+    if (res12 == 0) {
+        printf("Result = %f\n", val12);
+        printf("NumberOperations = %ld\n\n", numOperations12);
+    }
+
+    puts("================================================\n");
+
+    char *expression2 = "0.46464";
+    printf("Expression2: %s\n\n", expression2);
+
+    char postfix2[STACK_LEN];
+    double val21 = 0.0;
+    double val22 = 0.0;
+    long numOperations21 = 0;
+    long numOperations22 = 0;
+
+
+    puts("Single-stack calculator with "
+                "postfix notation conversion:");
+
+    int opn2 = InfixToPostfix(expression2, postfix2, sizeof(postfix2));
+
+    if (opn2 == 0) {
+        printf("opn: %s\n", postfix2);
+        int res21 = EvaluatePostfix(postfix2, &val21, &numOperations21);
+
+        if (res21 == 0) {
+            printf("Result = %f\n", val21);
+            printf("NumberOperations = %ld\n\n", numOperations21);
+        }
+    }
+
+    puts("Double-stack calculator without explicit"
+                 " conversion to postfix notation:");
+    int res22 = EvaluateInfix(expression2, &val22, &numOperations22);
+
+    if (res22 == 0) {
+        printf("Result = %f\n", val22);
+        printf("NumberOperations = %ld\n\n", numOperations22);
+    }
+
+    puts("================================================\n");
+
+    char *expression3 = "-64 + (-(-(-8))) * 5 /51.256165 -+-++- 78 /54 + 0";
+    printf("Expression5: %s\n\n", expression3);
+
+    char postfix3[STACK_LEN];
+    double val31 = 0.0;
+    double val32 = 0.0;
+    long numOperations31 = 0;
+    long numOperations32 = 0;
+
+
+    puts("Single-stack calculator with "
+                "postfix notation conversion:");
+
+    int opn3 = InfixToPostfix(expression3, postfix3, sizeof(postfix3));
+
+    if (opn3 == 0) {
+        printf("opn: %s\n", postfix3);
+        int res31 = EvaluatePostfix(postfix3, &val31, &numOperations31);
+
+        if (res31 == 0) {
+            printf("Result = %f\n", val31);
+            printf("NumberOperations = %ld\n\n", numOperations31);
+        }
+    }
+
+    puts("Double-stack calculator without explicit"
+                 " conversion to postfix notation:");
+    int res32 = EvaluateInfix(expression3, &val32, &numOperations32);
+
+    if (res32 == 0) {
+        printf("Result = %f\n", val32);
+        printf("NumberOperations = %ld\n\n", numOperations32);
+    }
+
+    puts("================================================\n");
+
+
+
+
+    char *expression4 = "5 + ++ -5 *113/1665 + 77/0 + 55";
+    printf("Expression4: %s\n\n", expression4);
+
+    char postfix4[STACK_LEN];
+    double val41 = 0.0;
+    double val42 = 0.0;
+    long numOperations41 = 0;
+    long numOperations42 = 0;
+
+
+    puts("Single-stack calculator with "
+                "postfix notation conversion:");
+
+    int opn4 = InfixToPostfix(expression4, postfix4, sizeof(postfix4));
+
+    if (opn4 == 0) {
+        printf("opn: %s\n", postfix4);
+        int res41 = EvaluatePostfix(postfix4, &val41, &numOperations41);
+
+        if (res41 == 0) {
+            printf("Result = %f\n", val41);
+            printf("NumberOperations = %ld\n\n", numOperations41);
+        }
+    }
+
+    puts("Double-stack calculator without explicit"
+                 " conversion to postfix notation:");
+    int res42 = EvaluateInfix(expression4, &val42, &numOperations42);
+
+    if (res42 == 0) {
+        printf("Result = %f\n", val42);
+        printf("NumberOperations = %ld\n\n", numOperations42);
+    }
+
+    puts("================================================\n");
+
+    char *expression5 = "13 + 26 *2+ 26-+-222+ 262/262/2+5";
+    printf("Expression5: %s\n\n", expression5);
+
+    char postfix5[STACK_LEN];
+    double val51 = 0.0;
+    double val52 = 0.0;
+    long numOperations51 = 0;
+    long numOperations52 = 0;
+
+
+    puts("Single-stack calculator with "
+                "postfix notation conversion:");
+
+    int opn5 = InfixToPostfix(expression5, postfix5, sizeof(postfix5));
+
+    if (opn5 == 0) {
+        printf("opn: %s\n", postfix5);
+        int res51 = EvaluatePostfix(postfix5, &val51, &numOperations51);
+
+        if (res51 == 0) {
+            printf("Result = %f\n", val51);
+            printf("NumberOperations = %ld\n\n", numOperations51);
+        }
+    }
+
+    puts("Double-stack calculator without explicit"
+                 " conversion to postfix notation:");
+    int res52 = EvaluateInfix(expression5, &val52, &numOperations52);
+
+    if (res52 == 0) {
+            printf("Result = %f\n", val52);
+            printf("NumberOperations = %ld\n\n", numOperations52);
+        }
+
+    puts("================================================\n");
+
+
+    char *expression6 = "11.16 +8 -*5 ";
+    printf("Expression6: %s\n\n", expression6);
+
+    char postfix6[STACK_LEN];
+    double val61 = 0.0;
+    double val62 = 0.0;
+    long numOperations61 = 0;
+    long numOperations62 = 0;
+
+
+    puts("Single-stack calculator with "
+                "postfix notation conversion:");
+
+    int opn6 = InfixToPostfix(expression6, postfix6, sizeof(postfix6));
+
+    if (opn6 == 0) {
+        printf("opn: %s\n", postfix6);
+        int res61 = EvaluatePostfix(postfix6, &val61, &numOperations61);
+
+        if (res61 == 0) {
+            printf("Result = %f\n", val61);
+            printf("NumberOperations = %ld\n\n", numOperations61);
+        }
+    }
+
+    puts("Double-stack calculator without explicit"
+                 " conversion to postfix notation:");
+    int res62 = EvaluateInfix(expression6, &val62, &numOperations62);
+
+    if (res62 == 0) {
+        printf("Result = %f\n", val62);
+        printf("NumberOperations = %ld\n\n", numOperations62);
+    }
+
+    puts("================================================\n");
+
+
+
+
+
+
+}
+
