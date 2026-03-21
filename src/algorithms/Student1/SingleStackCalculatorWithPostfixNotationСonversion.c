@@ -320,19 +320,17 @@ int InfixToPostfix(const char *infix, char *postfix, size_t postfixLen) {
             return -1;
         }
 
-        if (BufferOverflow(rpnLen, postfixLen - 2))
+         if (BufferOverflow(rpnLen, postfixLen - 2))
             return -1;
 
         rpn[rpnLen++] = stack[top--];
         rpn[rpnLen++] = ' ';
     }
     strcpy(postfix, rpn);
-    postfix[rpnLen - 1] = '\0';
+    postfix[rpnLen - 1] = ' ';
+    postfix[rpnLen] = '\0';
 
     return 0;
-
-    }
-
 
 //Converts a character to a Double digit
 double CharToDouble(char c) {
