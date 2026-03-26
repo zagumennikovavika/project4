@@ -1,6 +1,7 @@
 #include <stdio.h>
-#include <stdlib.h>  // обязательно для malloc и atoi
+#include <stdlib.h>  
 #include <ctype.h>
+#include <string.h>
 
 
 
@@ -60,17 +61,6 @@ ExprNode* createVariable(const char* name) {
     }
 
     strcpy(node->data.var_name, name);
-
-    return node;
-}
-
-ExprNode* createUnary(char op, ExprNode* operand) {
-    ExprNode* node = (ExprNode*)malloc(sizeof(ExprNode));
-    if (!node) return NULL;
-
-    node->type = NODE_UNARY;
-    node->data.unary.op = op;
-    node->data.unary.operand = operand;
 
     return node;
 }
@@ -377,21 +367,49 @@ ExprNode* isDiv(ExprNode* node){
 }
 
 ExprNode* isUnary(ExprNode* node){
+    if (node == NULL)
+        return NULL;
 
+    if (node->type != NODE_UNARY)
+        return node;
 
+    ExprNode* operand = node->data.unary.operand;
+    if (operand == NULL)
+        return node;
 
-    if (node -> data.unary.op == '-' &&
-        node -> data.unary.operand -> data.number < 0){
-        double num = (-1)*(node -> data.unary.operand -> data.number);
+    char op = node->data.unary.op;
 
-        freeNode(node);
+    if (op == '+'){
+        ExprNode* result = operand;
+
+        node->data.unary.operand = NULL; // отцепили
+        freeNode(node);                  // удалили +
+
+        return result;
+    }
+
+    if (op == '-' && operand->type == NODE_NUMBER){
+        double num = -(operand->data.number);
+
+        freeNode(node); // удалит и operand
         return createNumber(num);
     }
-    if (node -> data.unary.op == '-' &&
-        node -> data.unary.operand -> type == NODE_UNARY ){
-        ExprNode* result = 
-        
+
+    if (op == '-' && operand->type == NODE_UNARY &&
+        operand->data.unary.op == '-'){
+
+        ExprNode* result = operand->data.unary.operand;
+
+        // аккуратно отцепляем
+        operand->data.unary.operand = NULL;
+        node->data.unary.operand = NULL;
+
+        freeNode(node); // удаляем оба минуса
+
+        return result;
     }
+
+    return node;
 }
 
 ExprNode* rules(ExprNode* node){
@@ -415,9 +433,9 @@ ExprNode* rules(ExprNode* node){
             return isDiv(node);
     }
 
-    if (node -> type == NODE_UNARY){
+    if (node -> type == NODE_UNARY)
         return isUnary(node);
-    }
+    
 }
 
 ExprNode* simplify(ExprNode *node){
