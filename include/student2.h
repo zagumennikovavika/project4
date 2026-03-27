@@ -21,7 +21,7 @@ typedef struct ExprNode{
         double number;
         char* var_name;
         struct{
-            struct EXprNode* operand;
+            struct ExprNode* operand;
             char op;
         } unary;
         struct{
@@ -39,7 +39,7 @@ typedef struct ExprNode{
 
 typedef struct{
     char* name;
-    double var;
+    double value;
 } VariableTable;
 
 ExprNode* build_ast_from_postfix(const char* postfix);
