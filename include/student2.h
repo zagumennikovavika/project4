@@ -7,6 +7,14 @@
 
 #define BUFFER_NODE_SIZE 128
 
+typedef enum{
+    NODE_NUMBER,
+    NODE_VARIABLE,
+    NODE_UNARY,
+    NODE_BINARY,
+    NODE_FUNCTION,
+} NodeType;
+
 typedef struct ExprNode{
     NodeType type;
     union{
