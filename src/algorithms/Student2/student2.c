@@ -86,15 +86,16 @@ ExprNode* build_ast_from_postfix(const char *postfix){
             }
         } 
         else {
-                if (top < 1)
-                    goto cleanup;
-                ExprNode *node = malloc(sizeof(ExprNode));
-                node->type = NODE_BINARY;
-                node->data.binary.op = op;
-                node->data.binary.right = stack[top--];
-                node->data.binary.left = stack[top--];
-                stack[++top] = node;
-            }
+            char op = token[0];
+            if (top < 1)
+                goto cleanup;
+            ExprNode *node = malloc(sizeof(ExprNode));
+            node->type = NODE_BINARY;
+            node->data.binary.op = op;
+            node->data.binary.right = stack[top--];
+            node->data.binary.left = stack[top--];
+            stack[++top] = node;
+        }
         token = strtok(NULL, " ");
     }
     
