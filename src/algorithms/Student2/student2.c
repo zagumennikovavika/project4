@@ -75,7 +75,8 @@ ExprNode* build_ast_from_postfix(const char *postfix){
                 node->data.function.func_name = strdup(token);
                 node->data.function.arg_count = info->arity;
                 node->data.function.args = malloc(sizeof(ExprNode*) * info->arity);
-                for (int i = info->arity - 1; i >= 0; i--) node->data.function.args[i] = stack[top--];
+                for (int i = info->arity - 1; i >= 0; i--)
+                    node->data.function.args[i] = stack[top--];
                 stack[++top] = node;
             } else {
                 ExprNode *node = malloc(sizeof(ExprNode));
@@ -85,7 +86,8 @@ ExprNode* build_ast_from_postfix(const char *postfix){
             }
         } 
         else {
-                if (top < 1) goto cleanup;
+                if (top < 1)
+                    goto cleanup;
                 ExprNode *node = malloc(sizeof(ExprNode));
                 node->type = NODE_BINARY;
                 node->data.binary.op = op;
@@ -96,14 +98,14 @@ ExprNode* build_ast_from_postfix(const char *postfix){
         token = strtok(NULL, " ");
     }
     
-    if (index != 0)
+    if (top != 0)
         goto cleanup;
     free(copy);
-    return buffer[0];
+    return stack[0];
 
     cleanup:                             // Error message
-        while(index >= 0)
-            free_ast(buffer[index--]);
+        while(top >= 0)
+            free_ast(stack[top--]);
         free(copy);
         return NULL;
 
