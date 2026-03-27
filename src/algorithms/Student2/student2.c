@@ -61,13 +61,15 @@ ExprNode* build_ast_from_postfix(const char *postfix){
         char *endptr;
         double val = strtod(token, &endptr);
         if (*endptr == '\0' && token != endptr) {
-            if (top >= 127) { sprintf(error_msg, "Stack overflow"); goto cleanup; }
+            if (top >= 127)
+                goto cleanup;
             stack[++top] = create_node_number(val);
         }
         else if (isalpha(token[0])) {
             const FunctionInfo *info = get_function_info(token);
             if (info) {
-                if (top < info->arity - 1) { sprintf(error_msg, "Few args for %s", token); goto cleanup; }
+                if (top < info->arity - 1)
+                    goto cleanup;
                 ExprNode *node = malloc(sizeof(ExprNode));
                 node->type = NODE_FUNCTION;
                 node->data.function.func_name = strdup(token);
