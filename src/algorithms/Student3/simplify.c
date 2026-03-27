@@ -1,42 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>  
-#include <ctype.h>
-#include <string.h>
-
-
-
-typedef enum {
-    NODE_NUMBER, NODE_VARIABLE, 
-    NODE_UNARY, NODE_BINARY, 
-    NODE_FUNCTION 
-} NodeType;
-
-typedef struct ExprNode {
-    NodeType type;
-    union {
-        double number;                // для NODE_NUMBER
-        char *var_name;                // для NODE_VARIABLE
-        
-        struct {                       // для NODE_UNARY
-            struct ExprNode *operand;
-            char op;                    // например '-'
-        } unary;
-
-        struct {                       // для NODE_BINARY
-            struct ExprNode *left;
-            struct ExprNode *right;
-            char op;                    // '+', '-', '*', '/', '^'
-        } binary;
-
-        struct {                       // для NODE_FUNCTION
-            struct ExprNode **args;
-            int arg_count;
-            char *func_name;            // "sin", "cos" и т.д.
-        } function;
-        
-    } data;
-} ExprNode;
-
+#include "Student3.h"
 
 ExprNode* createNumber(double value) {
     ExprNode* node = (ExprNode*)malloc(sizeof(ExprNode));
@@ -256,6 +218,10 @@ ExprNode* isAddit(ExprNode* node){
 
         return node;
     }
+
+    if (left->type == NODE_BINARY && right->type == NODE_BINARY)
+        if (left->data.binary.op == '*' && right->data.binary.op == '*')
+            if (left->data.binary.left -> type)
 
     return node;
 }
