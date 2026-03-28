@@ -1,6 +1,5 @@
-```c
-#ifndef EXPR_SIMPLIFIER_H
-#define EXPR_SIMPLIFIER_H
+#ifndef STUDENT3_SIMPLIFIER_H
+#define STUDENT3_SIMPLIFIER_H
 
 #include <stdio.h>
 #include <stdlib.h>  
@@ -48,6 +47,8 @@ ExprNode* createFunction(const char* name, ExprNode** args, int arg_count);
 void freeNode(ExprNode* node);
 
 ExprNode* isMulti(ExprNode* node);
+ExprNode* similar(ExprNode* node, ExprNode* left_L, ExprNode* left_R,
+                 ExprNode* right_L, ExprNode* right_R);
 ExprNode* isAddit(ExprNode* node);
 ExprNode* isSubt(ExprNode* node);
 ExprNode* isDiv(ExprNode* node);
@@ -57,4 +58,3 @@ ExprNode* rules(ExprNode* node);
 ExprNode* simplify(ExprNode* node);
 
 #endif
-```

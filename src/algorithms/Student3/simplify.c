@@ -72,8 +72,6 @@ ExprNode* createFunction(const char* name, ExprNode** args, int arg_count) {
 }
 
 
-
-
 void freeNode(ExprNode* node) {
     if (node == NULL)
         return;
@@ -179,6 +177,82 @@ ExprNode* isMulti(ExprNode* node){
     return node;
 }
 
+ExprNode* similar(ExprNode* node, ExprNode* left, ExprNode* right) {
+    double a = 1.0, b = 1.0;
+    ExprNode* var1 = NULL;
+    ExprNode* var2 = NULL;
+
+    // -------- LEFT --------
+    if (left->type == NODE_BINARY && left->data.binary.op == '*') {
+        ExprNode* L = left->data.binary.left;
+        ExprNode* R = left->data.binary.right;
+
+        if (L->type == NODE_NUMBER && R->type == NODE_VARIABLE) {
+            a = L->data.number;
+            var1 = R;
+        } else if (L->type == NODE_VARIABLE && R->type == NODE_NUMBER) {
+            a = R->data.number;
+            var1 = L;
+        } else return node;
+    }
+    else if (left->type == NODE_VARIABLE) {
+        var1 = left;
+        a = 1.0;
+    }
+    else return node;
+
+    // -------- RIGHT --------
+    if (right->type == NODE_BINARY && right->data.binary.op == '*') {
+        ExprNode* L = right->data.binary.left;
+        ExprNode* R = right->data.binary.right;
+
+        if (L->type == NODE_NUMBER && R->type == NODE_VARIABLE) {
+            b = L->data.number;
+            var2 = R;
+        } else if (L->type == NODE_VARIABLE && R->type == NODE_NUMBER) {
+            b = R->data.number;
+            var2 = L;
+        } else return node;
+    }
+    else if (right->type == NODE_VARIABLE) {
+        var2 = right;
+        b = 1.0;
+    }
+    else return node;
+
+    // -------- СРАВНЕНИЕ --------
+    if (strcmp(var1->data.var_name, var2->data.var_name) != 0)
+        return node;
+
+    // -------- СОЗДАЕМ РЕЗУЛЬТАТ --------
+    double sum = a + b;
+
+    // отцепляем переменные, чтобы их не удалил freeNode
+    if (left->type == NODE_BINARY) {
+        left->data.binary.left = NULL;
+        left->data.binary.right = NULL;
+    }
+
+    if (right->type == NODE_BINARY) {
+        right->data.binary.left = NULL;
+        right->data.binary.right = NULL;
+    }
+
+    node->data.binary.left = NULL;
+    node->data.binary.right = NULL;
+
+    freeNode(node);
+
+    if (sum == 0.0)
+        return createNumber(0.0);
+
+    if (sum == 1.0)
+        return var1;
+
+    return createBinary('*', createNumber(sum), var1);
+}
+
+
 ExprNode* isAddit(ExprNode* node){
     if (node == NULL)
         return NULL;
@@ -218,10 +292,8 @@ ExprNode* isAddit(ExprNode* node){
 
         return node;
     }
-
-    if (left->type == NODE_BINARY && right->type == NODE_BINARY)
-        if (left->data.binary.op == '*' && right->data.binary.op == '*')
-            if (left->data.binary.left -> type)
+    if(node->data.binary.op == '+')
+        return similar(node, left, right);
 
     return node;
 }
@@ -402,6 +474,7 @@ ExprNode* rules(ExprNode* node){
     if (node -> type == NODE_UNARY)
         return isUnary(node);
     
+    return node;
 }
 
 ExprNode* simplify(ExprNode *node){
