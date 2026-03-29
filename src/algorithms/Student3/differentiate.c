@@ -186,3 +186,6 @@ ExprNode* differentiate(ExprNode *node, const char *var_name) {
 
     return NULL;
 }
+
+
+
