@@ -1,23 +1,21 @@
 
 #include "Student3.h"
 
-// Вспомогательная проверка числа
 void assert_number(ExprNode* node, double expected) {
     assert(node != NULL);
     assert(node->type == NODE_NUMBER);
     assert(node->data.number == expected);
 }
 
-// Вспомогательная проверка переменной
 void assert_variable(ExprNode* node, const char* name) {
     assert(node != NULL);
     assert(node->type == NODE_VARIABLE);
     assert(strcmp(node->data.var_name, name) == 0);
 }
 
-// ===== TESTS =====
 
-// 1. Умножение на 0
+
+// 1. 
 void test_mul_zero() {
     ExprNode* expr = createBinary('*',
         createNumber(5),
@@ -30,7 +28,7 @@ void test_mul_zero() {
     freeNode(expr);
 }
 
-// 2. Умножение на 1
+// 2. 
 void test_mul_one() {
     ExprNode* expr = createBinary('*',
         createVariable("x"),
@@ -43,7 +41,7 @@ void test_mul_one() {
     freeNode(expr);
 }
 
-// 3. Сложение чисел
+// 3. 
 void test_add_numbers() {
     ExprNode* expr = createBinary('+',
         createNumber(2),
@@ -87,7 +85,7 @@ void test_sub_same() {
     freeNode(expr);
 }
 
-// 6. Деление на 1
+// 6. 
 void test_div_one() {
     ExprNode* expr = createBinary('/',
         createVariable("x"),
@@ -100,7 +98,7 @@ void test_div_one() {
     freeNode(expr);
 }
 
-// 7. Деление одинаковых переменных: x/x = 1
+// 7. x/x = 1
 void test_div_same() {
     ExprNode* expr = createBinary('/',
         createVariable("x"),
@@ -113,7 +111,7 @@ void test_div_same() {
     freeNode(expr);
 }
 
-// 8. Унарный минус числа
+// 8. 
 void test_unary_minus() {
     ExprNode* expr = createUnary('-',
         createNumber(5)
@@ -137,7 +135,7 @@ void test_double_minus() {
     freeNode(expr);
 }
 
-// 10. Сложное выражение: (2 * x) + (3 * x) = 5x
+// 10. (2 * x) + (3 * x) = 5x
 void test_complex() {
     ExprNode* left = createBinary('*', createNumber(2), createVariable("x"));
     ExprNode* right = createBinary('*', createNumber(3), createVariable("x"));

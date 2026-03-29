@@ -29,10 +29,9 @@ void test_differentiate_binary() {
     ExprNode* x = createVariable("x");
     ExprNode* n2 = createNumber(2.0);
 
-    ExprNode* expr = createBinary('*', x, n2); // x*2
+    ExprNode* expr = createBinary('*', x, n2); 
     ExprNode* dexpr = differentiate(expr, "x");
 
-    // Ожидаем: x*2' + 2*x' → x*0 + 2*1 → 0 + 2 → 2
     ExprNode* expected = createBinary('+',
                                      createBinary('*', copyTree(x), createNumber(0.0)),
                                      createBinary('*', copyTree(n2), createNumber(1.0)));
@@ -46,7 +45,6 @@ void test_differentiate_function() {
 
     ExprNode* dsinx = differentiate(sinx, "x");
 
-    // Ожидаем cos(x) * 1
     ExprNode* arg_copy = copyTree(x);
     ExprNode* cosx = createFunction("cos", &arg_copy, 1);
     ExprNode* expected = createBinary('*', cosx, createNumber(1.0));

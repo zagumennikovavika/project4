@@ -6,8 +6,8 @@ void test_expression_equal_numbers() {
     ExprNode* n2 = createNumber(5.0);
     ExprNode* n3 = createNumber(3.0);
 
-    assert(expression_equal(n1, n2)); // одинаковые числа
-    assert(!expression_equal(n1, n3)); // разные числа
+    assert(expression_equal(n1, n2)); 
+    assert(!expression_equal(n1, n3)); 
     printf("test_expression_equal_numbers passed\n");
 }
 
@@ -16,8 +16,8 @@ void test_expression_equal_variables() {
     ExprNode* x2 = createVariable("x");
     ExprNode* y = createVariable("y");
 
-    assert(expression_equal(x1, x2)); // одинаковые переменные
-    assert(!expression_equal(x1, y)); // разные переменные
+    assert(expression_equal(x1, x2)); 
+    assert(!expression_equal(x1, y)); 
     printf("test_expression_equal_variables passed\n");
 }
 
@@ -27,8 +27,8 @@ void test_expression_equal_unary() {
     ExprNode* neg2 = createUnary('-', copyTree(x));
     ExprNode* plus = createUnary('+', x);
 
-    assert(expression_equal(neg1, neg2)); // одинаковый унарный минус
-    assert(!expression_equal(neg1, plus)); // разный оператор
+    assert(expression_equal(neg1, neg2)); 
+    assert(!expression_equal(neg1, plus)); 
     printf("test_expression_equal_unary passed\n");
 }
 
@@ -36,16 +36,13 @@ void test_expression_equal_binary() {
     ExprNode* x = createVariable("x");
     ExprNode* y = createVariable("y");
 
-    // Проверка обычного порядка
     ExprNode* add1 = createBinary('+', x, y);
     ExprNode* add2 = createBinary('+', copyTree(x), copyTree(y));
     assert(expression_equal(add1, add2));
 
-    // Проверка коммутативности
     ExprNode* add3 = createBinary('+', copyTree(y), copyTree(x));
     assert(expression_equal(add1, add3));
 
-    // Проверка различного порядка для некомутаитивного оп
     ExprNode* sub1 = createBinary('-', x, y);
     ExprNode* sub2 = createBinary('-', copyTree(y), copyTree(x));
     assert(!expression_equal(sub1, sub2));
@@ -60,8 +57,8 @@ void test_expression_equal_function() {
     ExprNode* sin2 = createFunction("sin", &x, 1);
     ExprNode* cos1 = createFunction("cos", &x, 1);
 
-    assert(expression_equal(sin1, sin2)); // одинаковые функции
-    assert(!expression_equal(sin1, cos1)); // разные функции
+    assert(expression_equal(sin1, sin2)); 
+    assert(!expression_equal(sin1, cos1)); 
 
     printf("test_expression_equal_function passed\n");
 }

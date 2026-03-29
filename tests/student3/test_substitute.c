@@ -4,7 +4,6 @@
 #include <math.h>
 #include "Student3.h"
 
-// --- Вспомогательные проверки ---
 
 void assert_number(ExprNode* node, double value) {
     assert(node != NULL);
@@ -18,9 +17,8 @@ void assert_variable(ExprNode* node, const char* name) {
     assert(strcmp(node->data.var_name, name) == 0);
 }
 
-// --- Тесты ---
 
-// 1. Простая переменная x -> число
+// 1.  x -> number
 void test_simple_variable() {
     ExprNode* x = createVariable("x");
     ExprNode* result = substitute(x, "x", 5);
@@ -29,7 +27,7 @@ void test_simple_variable() {
     freeNode(result);
 }
 
-// 2. Переменная не совпадает с целью подстановки
+// 2.
 void test_no_substitute() {
     ExprNode* y = createVariable("y");
     ExprNode* result = substitute(y, "x", 5);
@@ -38,7 +36,7 @@ void test_no_substitute() {
     freeNode(result);
 }
 
-// 3. Подстановка в унарный минус: -x -> -5
+// 3. -x -> -5
 void test_unary_substitute() {
     ExprNode* x = createVariable("x");
     ExprNode* expr = createUnary('-', x);
@@ -54,7 +52,7 @@ void test_unary_substitute() {
     freeNode(expr);
 }
 
-// 4. Подстановка в бинарное выражение: x + 3 -> 5 + 3
+// 4. x + 3 -> 5 + 3
 void test_binary_substitute() {
     ExprNode* expr = createBinary('+', createVariable("x"), createNumber(3));
 
@@ -70,7 +68,7 @@ void test_binary_substitute() {
     freeNode(expr);
 }
 
-// 5. Вложенные выражения: x*y + z, x->2
+// 5. x*y + z, x->2
 void test_nested_substitute() {
     ExprNode* mult = createBinary('*', createVariable("x"), createVariable("y"));
     ExprNode* expr = createBinary('+', mult, createVariable("z"));
@@ -80,18 +78,18 @@ void test_nested_substitute() {
     ExprNode* left = expr->data.binary.left;
     ExprNode* right = expr->data.binary.right;
 
-    // Проверяем левую часть x*y -> 2*y
+    // x*y -> 2*y
     assert(left->type == NODE_BINARY);
     assert_number(left->data.binary.left, 2);
     assert_variable(left->data.binary.right, "y");
 
-    // Правая часть должна остаться "z"
+    
     assert_variable(right, "z");
 
     freeNode(expr);
 }
 
-// 6. Подстановка в функцию: f(x, y), x->1
+// 6. f(x, y), x->1
 void test_function_substitute() {
     ExprNode* args[2];
     args[0] = createVariable("x");
@@ -101,15 +99,14 @@ void test_function_substitute() {
 
     func = substitute(func, "x", 1);
 
-    // Первый аргумент -> 1
     assert_number(func->data.function.args[0], 1);
-    // Второй аргумент -> "y"
+    
     assert_variable(func->data.function.args[1], "y");
 
     freeNode(func);
 }
 
-// 7. Подстановка нескольких переменных: x + y, x->3, y->4
+// 7. x + y, x->3, y->4
 void test_multiple_substitute() {
     ExprNode* expr = createBinary('+', createVariable("x"), createVariable("y"));
 
@@ -122,7 +119,7 @@ void test_multiple_substitute() {
     freeNode(expr);
 }
 
-// 8. Подстановка в унарном выражении с унарным числом: -(-x) -> -(-5)
+// 8.  -(-x) -> -(-5)
 void test_double_unary() {
     ExprNode* x = createVariable("x");
     ExprNode* inner = createUnary('-', x);
@@ -139,7 +136,6 @@ void test_double_unary() {
     freeNode(expr);
 }
 
-// ===== MAIN =====
 int main() {
     test_simple_variable();
     test_no_substitute();

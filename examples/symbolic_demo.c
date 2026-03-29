@@ -43,7 +43,7 @@ int main() {
     ExprNode* x_plus_0 = createBinary('+', x, zero);
     ExprNode* expr1 = createBinary('*', x_plus_0, one);
 
-    printf("Исходное выражение 1: ");
+    printf("original expression 1: ");
     printExpr(expr1);
     printf("\n");
 
@@ -66,12 +66,12 @@ int main() {
     ExprNode* three_x = createBinary('*', three, x2);
     ExprNode* expr2 = createBinary('+', two_x, three_x);
 
-    printf("\nИсходное выражение 2: ");
+    printf("\noriginal expression 2: ");
     printExpr(expr2);
     printf("\n");
 
     ExprNode* simplified2 = simplify(copyTree(expr2));
-    printf("После simplify (объединение подобных): ");
+    printf("After simplify (combine similar): ");
     printExpr(simplified2);
     printf("\n");
 
@@ -88,17 +88,17 @@ int main() {
     ExprNode* numerator = createBinary('+', x_sq, x4);
     ExprNode* expr3 = createBinary('/', numerator, x5);
 
-    printf("\nИсходное выражение 3: ");
+    printf("\nOriginal expression 3: ");
     printExpr(expr3);
     printf("\n");
 
     ExprNode* simplified3 = simplify(copyTree(expr3));
-    printf("После simplify: ");
+    printf("after simplify: ");
     printExpr(simplified3);
     printf("\n");
 
     ExprNode* deriv5 = differentiate(copyTree(expr3), "x");
-    printf("Дифференцирование по x: ");
+    printf("Differentiation with respect to x: ");
     printExpr(deriv5);
     printf("\n");
 
@@ -112,12 +112,12 @@ int main() {
     ExprNode* unary_minus_x = createUnary('-', x6);
     ExprNode* expr4 = createUnary('-', unary_minus_x);
 
-    printf("\nИсходное выражение 4: ");
+    printf("\nOriginal expression 4: ");
     printExpr(expr4);
     printf("\n");
 
     ExprNode* simplified4 = simplify(copyTree(expr4));
-    printf("После simplify (удаление двойного минуса): ");
+    printf("After simplify (removing the double minus): ");
     printExpr(simplified4);
     printf("\n");
 
