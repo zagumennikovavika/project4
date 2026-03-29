@@ -47,8 +47,7 @@ ExprNode* createFunction(const char* name, ExprNode** args, int arg_count);
 void freeNode(ExprNode* node);
 
 ExprNode* isMulti(ExprNode* node);
-ExprNode* similar(ExprNode* node, ExprNode* left_L, ExprNode* left_R,
-                 ExprNode* right_L, ExprNode* right_R);
+ExprNode* similar(ExprNode* node, ExprNode* left, ExprNode* right);
 ExprNode* isAddit(ExprNode* node);
 ExprNode* isSubt(ExprNode* node);
 ExprNode* isDiv(ExprNode* node);
