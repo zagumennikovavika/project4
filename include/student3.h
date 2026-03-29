@@ -5,6 +5,8 @@
 #include <stdlib.h>  
 #include <ctype.h>
 #include <string.h>
+#include <stdbool.h>
+
 
 typedef enum {
     NODE_NUMBER, NODE_VARIABLE, 
@@ -55,5 +57,10 @@ ExprNode* isUnary(ExprNode* node);
 
 ExprNode* rules(ExprNode* node);
 ExprNode* simplify(ExprNode* node);
+
+ExprNode* substitute(ExprNode *node, const char *var_name, double value);
+ExprNode* differentiate(ExprNode *node, const char *var_name);
+ExprNode* copyTree(ExprNode* node);
+bool expression_equal(ExprNode *a, ExprNode *b);
 
 #endif
