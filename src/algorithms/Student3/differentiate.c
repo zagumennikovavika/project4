@@ -1,20 +1,21 @@
 #include "Student3.h"
 
+// recursively create a deep copy of the expression tree
 ExprNode* copyTree(ExprNode* node) {
     if (node == NULL)
         return NULL;
 
-    // --- NUMBER ---
+    // copy a number node
     if (node->type == NODE_NUMBER) {
         return createNumber(node->data.number);
     }
 
-    // --- VARIABLE ---
+    // copy a variable node
     if (node->type == NODE_VARIABLE) {
         return createVariable(node->data.var_name);
     }
 
-    // --- UNARY ---
+    // copy a unary operation node
     if (node->type == NODE_UNARY) {
         ExprNode* operand_copy =
             copyTree(node->data.unary.operand);
@@ -25,7 +26,7 @@ ExprNode* copyTree(ExprNode* node) {
         );
     }
 
-    // --- BINARY ---
+    // copy a binary operation node
     if (node->type == NODE_BINARY) {
         ExprNode* left_copy =
             copyTree(node->data.binary.left);
@@ -40,7 +41,7 @@ ExprNode* copyTree(ExprNode* node) {
         );
     }
 
-    // --- FUNCTION ---
+    // copy a function node and its arguments
     if (node->type == NODE_FUNCTION) {
         int n = node->data.function.arg_count;
 
@@ -65,15 +66,16 @@ ExprNode* copyTree(ExprNode* node) {
     return NULL;
 }
 
+// compute the derivative of an expression tree with respect to a variable
 ExprNode* differentiate(ExprNode *node, const char *var_name) {
     if (node == NULL)
         return NULL;
 
-    // --- NUMBER ---
+    // derivative of a constant is zero
     if (node->type == NODE_NUMBER)
         return createNumber(0.0);
 
-    // --- VARIABLE ---
+    // derivative of a variable: 1 if it matches, 0 otherwise
     if (node->type == NODE_VARIABLE) {
         if (strcmp(node->data.var_name, var_name) == 0)
             return createNumber(1.0);
@@ -81,7 +83,7 @@ ExprNode* differentiate(ExprNode *node, const char *var_name) {
             return createNumber(0.0);
     }
 
-    // --- UNARY ---
+    // derivative of a unary operation
     if (node->type == NODE_UNARY) {
         char op = node->data.unary.op;
 
@@ -95,7 +97,7 @@ ExprNode* differentiate(ExprNode *node, const char *var_name) {
             return createUnary('-', d);
     }
 
-    // --- BINARY ---
+    // derivative of a binary operation
     if (node->type == NODE_BINARY) {
         char op = node->data.binary.op;
 
@@ -105,15 +107,15 @@ ExprNode* differentiate(ExprNode *node, const char *var_name) {
         ExprNode* df = differentiate(f, var_name);
         ExprNode* dg = differentiate(g, var_name);
 
-        // --- f + g ---
+        // derivative of addition: f' + g'
         if (op == '+')
             return createBinary('+', df, dg);
 
-        // --- f - g ---
+        // derivative of subtraction: f' - g'
         if (op == '-')
             return createBinary('-', df, dg);
 
-        // --- f * g → f*dg + g*df ---
+        // derivative of multiplication: f*g' + g*f'
         if (op == '*') {
             ExprNode* term1 =
                 createBinary('*', copyTree(f), dg);
@@ -124,7 +126,7 @@ ExprNode* differentiate(ExprNode *node, const char *var_name) {
             return createBinary('+', term1, term2);
         }
 
-        // --- f / g ---
+        // derivative of division: (f'*g - f*g') / g^2
         if (op == '/') {
             ExprNode* num1 =
                 createBinary('*', df, copyTree(g));
@@ -142,7 +144,7 @@ ExprNode* differentiate(ExprNode *node, const char *var_name) {
         }
     }
 
-    // --- FUNCTION ---
+    // derivative of standard functions
     if (node->type == NODE_FUNCTION) {
         char* name = node->data.function.func_name;
         ExprNode* arg = node->data.function.args[0];
@@ -186,6 +188,3 @@ ExprNode* differentiate(ExprNode *node, const char *var_name) {
 
     return NULL;
 }
-
-
-

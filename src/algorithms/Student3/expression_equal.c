@@ -1,6 +1,6 @@
-
 #include "Student3.h"
 
+// recursively check if two expression trees are structurally and mathematically equal
 bool expression_equal(ExprNode *a, ExprNode *b) {
     if (a == NULL && b == NULL)
         return true;
@@ -11,15 +11,15 @@ bool expression_equal(ExprNode *a, ExprNode *b) {
     if (a->type != b->type)
         return false;
 
-    // --- NUMBER ---
+    // compare number nodes
     if (a->type == NODE_NUMBER)
         return a->data.number == b->data.number;
 
-    // --- VARIABLE ---
+    // compare variable nodes by name
     if (a->type == NODE_VARIABLE)
         return strcmp(a->data.var_name, b->data.var_name) == 0;
 
-    // --- UNARY ---
+    // compare unary operation nodes
     if (a->type == NODE_UNARY) {
         if (a->data.unary.op != b->data.unary.op)
             return false;
@@ -30,7 +30,7 @@ bool expression_equal(ExprNode *a, ExprNode *b) {
         );
     }
 
-    // --- BINARY ---
+    // compare binary operation nodes
     if (a->type == NODE_BINARY) {
         if (a->data.binary.op != b->data.binary.op)
             return false;
@@ -40,12 +40,12 @@ bool expression_equal(ExprNode *a, ExprNode *b) {
         ExprNode* bL = b->data.binary.left;
         ExprNode* bR = b->data.binary.right;
 
-        // обычный порядок
+        // check standard left-right order
         if (expression_equal(aL, bL) &&
             expression_equal(aR, bR))
             return true;
 
-        // --- КОММУТАТИВНОСТЬ ---
+        // check commutativity for addition and multiplication
         if (a->data.binary.op == '+' || a->data.binary.op == '*') {
             if (expression_equal(aL, bR) &&
                 expression_equal(aR, bL))
@@ -55,7 +55,7 @@ bool expression_equal(ExprNode *a, ExprNode *b) {
         return false;
     }
 
-    // --- FUNCTION ---
+    // compare function nodes and their arguments
     if (a->type == NODE_FUNCTION) {
         if (strcmp(a->data.function.func_name,
                    b->data.function.func_name) != 0)
