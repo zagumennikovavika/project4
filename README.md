@@ -3,10 +3,12 @@
 A library for parsing, calculating, and simplifying mathematical expressions in the C language.
 
 ## Launch
+```
 make run        # Run benchmarks
 make examples   # Run examples
 make tests      # Run tests
 make clean      # Clean build files
+```
 
 ## Description
 
