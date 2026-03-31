@@ -5,38 +5,9 @@
 #include <string.h>
 #include <ctype.h>
 #include <math.h>
+#include "expression_types.h"
 
 #define BUFFER_NODE_SIZE 128
-
-typedef enum{
-    NODE_NUMBER,
-    NODE_VARIABLE,
-    NODE_UNARY,
-    NODE_BINARY,
-    NODE_FUNCTION,
-} NodeType;
-
-typedef struct ExprNode{
-    NodeType type;
-    union{
-        double number;
-        char* var_name;
-        struct{
-            struct ExprNode* operand;
-            char op;
-        } unary;
-        struct{
-            struct ExprNode* left;
-            struct ExprNode* right;
-            char op;
-        } binary;
-        struct{
-            struct ExprNode** args;
-            int arg_count;
-            char* func_name;
-        } function;
-    } data;
-} ExprNode;
 
 typedef struct{
     char* name;

@@ -14,13 +14,14 @@ void free_ast(ExprNode* node){
             free_ast(node->data.binary.left);
             free_ast(node->data.binary.right);
             break;
-        case NODE_FUNCTION:
+        case NODE_FUNCTION: {
             int count = node->data.function.arg_count;
             for (int i = 0; i < count; i++)
                 free_ast(node->data.function.args[i]);
             free(node->data.function.args);
             free(node->data.function.func_name);
             break;
+        }
     }
     free(node);
 }

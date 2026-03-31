@@ -330,7 +330,8 @@ int InfixToPostfix(const char *infix, char *postfix, size_t postfixLen) {
     postfix[rpnLen - 1] = ' ';
     postfix[rpnLen] = '\0';
 
-    return 0;}
+    return 0;
+}
 
 //Converts a character to a Double digit
 double CharToDouble(char c) {
