@@ -3,7 +3,6 @@
 A library for parsing, calculating, and simplifying mathematical expressions in the C language.
 
 ## Launch
-```bash
 make run        # Run benchmarks
 make examples   # Run examples
 make tests      # Run tests
