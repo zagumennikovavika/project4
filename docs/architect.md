@@ -1,7 +1,7 @@
 
 
 
-
+## Core Functions
 
 | Function | Description | Return Value |
 |----------|-------------|--------------|
