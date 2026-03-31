@@ -234,7 +234,7 @@ void BenchSimplificationComparison(void) {
             vars = varsX;
         }
         
-        // ===== WITHOUT SIMPLIFICATION =====
+        // Without simplification
         Expression* expr_original = ExprParsePostfix(tests[i].postfix, &err);
         if (!expr_original) {
             printf("  %-30s | PARSE ERROR\n", tests[i].name);
@@ -251,7 +251,7 @@ void BenchSimplificationComparison(void) {
         
         double time_without = (double)(t2 - t1) / CLOCKS_PER_SEC * 1000.0;
         
-        // ===== WITH SIMPLIFICATION =====
+        // With simplification
         Expression* expr_simplified = ExprSimplify(expr_original, &err);
         if (!expr_simplified) {
             printf("  %-30s | SIMPLIFY ERROR\n", tests[i].name);
@@ -278,7 +278,6 @@ void BenchSimplificationComparison(void) {
     }
 }
 
-/* MAIN */
 int main(void) {
     printf("   EXPRESSION LIBRARY BENCHMARK (Full Mode - AST enabled)\n");
     printf("   =====================================================\n");
