@@ -2,30 +2,44 @@
 
 A library for parsing, calculating, and simplifying mathematical expressions in the C language.
 
+## Launch
+make run 
+make examples
+make tests
+make clean
+
 ## Description
 
 The library provides functionality for:
 - Parsing infix mathematical expressions
-- Conversion to postfix (reverse Polish) notation
-- Calculations of expressions with support for arithmetic operations
+- Converting to postfix (Reverse Polish Notation)
+- Evaluating expressions with arithmetic operations
 - Counting the number of operations performed
+- Simplifying expressions with algebraic rules
 - Error handling
 
-## Main API Functions
+## Architecture
+The project is divided into modules implemented by different team members:
+
+| Module | Responsibility |
+|--------|---------------|
+| **Student 1** | Infix to postfix conversion, postfix evaluation |
+| **Student 2** | AST construction, evaluation with variables and functions |
+| **Student 3** | Expression simplification, differentiation | 
+| **Architect** | API design, module integration, benchmarks |
 
 | Function | Description | Return Value |
-|----------|-------------|---------------|
+|----------|-------------|--------------|
 | `ExprParseInfix(infix, err)` | Parse an infix expression | `Expression*` or NULL |
 | `ExprParsePostfix(postfix, err)` | Parse a postfix expression | `Expression*` or NULL |
 | `ExprEvaluate(expr, vars, result, err)` | Evaluate an expression | 0 on success, -1 on error |
+| `ExprSimplify(expr, err)` | Simplify an expression | `Expression*` or NULL |
 | `ExprFree(expr)` | Free memory | void |
 | `ExprGetOperations(expr)` | Get the number of operations | `long` |
 | `ExprGetInfix(expr)` | Get the original infix string | `const char*` |
 | `ExprGetPostfix(expr)` | Get the postfix string | `const char*` |
-| `ExprSimplify(expr, err)` | Simplify an expression | `Expression*` or NULL |
-| `ExprToPrefixString(expr, err)` | Convert to prefix notation | `char*` (requires free) |
 | `ExprCheckSyntax(infix, err)` | Check expression syntax | 0 on success, -1 on error |
-| `ExprErrorString(code)` | Get error text by code | `const char*` |
+| `ExprErrorString(code)` | Get error description by code | `const char*` |
 | `ExprPrintError(err)` | Print error to stderr | void |
 
 ## Error Codes
@@ -43,11 +57,13 @@ The library provides functionality for:
 
 ## Supported Operations
 
-| Operator | Description | Precedence | Associativity |
-|----------|-------------|------------|---------------|
-| `+` | Addition | 1 | Left |
-| `-` | Subtraction | 1 | Left |
-| `*` | Multiplication | 2 | Left |
-| `/` | Division | 2 | Left |
-| `^` | Exponentiation | 3 | Right |
-| `~` | Unary minus | 3 | Right |
+| Operator | Description | Precedence |
+|----------|-------------|------------|
+| `+` | Addition | 1 |
+| `-` | Subtraction | 1 |
+| `*` | Multiplication | 2 |
+| `/` | Division | 2 |
+| `^` | Exponentiation | 3 |
+| `~` | Unary minus | 3 |
+
+
