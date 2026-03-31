@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <math.h>
 
 #define BUFFER_NODE_SIZE 128
 
@@ -39,11 +40,11 @@ typedef struct ExprNode{
 
 typedef struct{
     char* name;
-    double value;
+    double var;
 } VariableTable;
 
 ExprNode* build_ast_from_postfix(const char* postfix);
-double evaluate_ast(ExprNode *node, VariableTable* variables);
+int evaluate_ast(ExprNode *node, VariableTable* variables, int size_table, double* result);
 void free_ast(ExprNode* node);
 
 #endif
